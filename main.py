@@ -9,10 +9,6 @@ app = FastAPI()
 templates = Jinja2Templates(directory="./templates")
 
 
-# @app.get("/", response_class=HTMLResponse)
-# async def get_main(request: Request):
-#     return templates.TemplateResponse("geo.html", {"request": request})
-
 @app.get("/")
 def main_page(request: Request):
     result = "The inputed area:"
