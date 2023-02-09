@@ -8,7 +8,6 @@ MAP_OUTFILE_PATH = './templates/geo.html'
 
 def make_map(area_id: str = None):
     area_is_valid = True
-    print(f'Got area id: {area_id}')
     area = Area(area_id, with_proxy=True)
     coords = area.get_coord()
     while len(coords) == 1:
@@ -19,15 +18,10 @@ def make_map(area_id: str = None):
         print('area is invalid')
         area_is_valid = False
         return area_is_valid
-    print(f'Polygon coordinates: {coords}')
-    center = [coords[0][1], coords[1][0]]
-    print(f'Polygon center: {center}')
+    center = (area.get_center_xy()[0][0][0])[::-1]
     polygon_geom = Polygon(coords)
     polygon = gpd.GeoDataFrame(index=[0], crs='epsg:4326', geometry=[polygon_geom])
-    # polygon.to_file(filename='polygon.geojson', driver='GeoJSON')
-    print(polygon)
-    print(polygon_geom)
-    area_map = folium.Map(location=center, zoom_start=16, tiles='OpenStreetMap')
+    area_map = folium.Map(location=center, zoom_start=18, tiles='OpenStreetMap')
     folium.GeoJson(polygon).add_to(area_map)
     folium.LatLngPopup().add_to(area_map)
 
