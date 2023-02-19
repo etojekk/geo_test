@@ -1,9 +1,9 @@
-from utils import *
-
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 import uvicorn
+
+from utils import make_map
 
 app = FastAPI()
 templates = Jinja2Templates(directory="./templates")
@@ -25,6 +25,3 @@ def main_page(request: Request, area_id: str = Form(...)):
 def map_page(request: Request):
     return templates.TemplateResponse('geo.html', context={'request': request})
 
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=5000)
